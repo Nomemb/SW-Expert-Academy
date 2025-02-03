@@ -12,35 +12,35 @@ V와 E, 정점 정보 쿼리 갯수가 주어지고
 2 <= V <= 100, 1 <= E <= 1000
 */
 
-#include <stdio.h>
 #include <malloc.h>
+#include <stdio.h>
 
 // 그래프의 각 정점 나타내는 구조체
 typedef struct adjlistNode
 {
-    int vertex;                 // 번호
-    struct adjlistNode *next;   // 다음 인접 정점 포인터
+    int vertex; // 번호
+    struct adjlistNode* next; // 다음 인접 정점 포인터
 } AdjlistNode;
 
 // 각 정점의 인접 리스트 나타내는 구조체
 typedef struct
 {
-    int num_members;            // 인접 정점 수
-    AdjlistNode *head;          // 인접 리스트의 첫번째 노드
-    AdjlistNode *tail;          // 인접 리스트의 마지막 노드
+    int num_members; // 인접 정점 수
+    AdjlistNode* head; // 인접 리스트의 첫번째 노드
+    AdjlistNode* tail; // 인접 리스트의 마지막 노드
 } AdjList;
 
 // 전체 그래프 구조체
 typedef struct
 {
-    int num_vertices;           // 그래프의 총 정점 수
-    AdjList * adjListArr;       // 각 정점의 인접 리스트 배열
+    int num_vertices; // 그래프의 총 정점 수
+    AdjList* adjListArr; // 각 정점의 인접 리스트 배열
 } Graph;
 
-AdjlistNode * createNode(int v)
+AdjlistNode* createNode(int v)
 {
     // AdjlistNode만큼의 메모리를 동적으로 할당. 타입 캐스팅 후 newNode에 저장.
-    AdjlistNode * newNode = (AdjlistNode *)malloc(sizeof(AdjlistNode));
+    AdjlistNode* newNode = (AdjlistNode*)malloc(sizeof(AdjlistNode));
 
     newNode->vertex = v;
     newNode->next = NULL;
@@ -48,12 +48,12 @@ AdjlistNode * createNode(int v)
     return newNode;
 }
 
-Graph * createGraph(int n)
+Graph* createGraph(int n)
 {
-    Graph * graph = (Graph *)malloc(sizeof(Graph));
+    Graph* graph = (Graph*)malloc(sizeof(Graph));
     graph->num_vertices = n;
 
-    graph->adjListArr = (AdjList *)malloc(n * sizeof(AdjList));
+    graph->adjListArr = (AdjList*)malloc(n * sizeof(AdjList));
 
     for (int i = 0; i < n; i++)
     {
@@ -64,7 +64,7 @@ Graph * createGraph(int n)
     return graph;
 }
 
-void destroyGraph(Graph * graph)
+void destroyGraph(Graph* graph)
 {
     if (graph)
     {
@@ -72,10 +72,10 @@ void destroyGraph(Graph * graph)
         {
             for (int v = 0; v < graph->num_vertices; v++)
             {
-                AdjlistNode * adjListPtr = graph->adjListArr[v].head;
+                AdjlistNode* adjListPtr = graph->adjListArr[v].head;
                 while (adjListPtr)
                 {
-                    AdjlistNode * tmp = adjListPtr;
+                    AdjlistNode* tmp = adjListPtr;
                     adjListPtr = adjListPtr->next;
                     free(tmp);
                 }
@@ -86,9 +86,9 @@ void destroyGraph(Graph * graph)
     }
 }
 
-void addEdge(Graph *graph, int src, int dest)
+void addEdge(Graph* graph, int src, int dest)
 {
-    AdjlistNode * newNode = createNode(dest);
+    AdjlistNode* newNode = createNode(dest);
     if (graph->adjListArr[src].tail != NULL)
     {
         graph->adjListArr[src].tail->next = newNode;
@@ -113,10 +113,9 @@ void addEdge(Graph *graph, int src, int dest)
     graph->adjListArr[dest].num_members++;
 }
 
-void displayGraph(Graph * graph, int i)
+void displayGraph(Graph* graph, int i)
 {
-
-    AdjlistNode * adjListPtr = graph->adjListArr[i].head;
+    AdjlistNode* adjListPtr = graph->adjListArr[i].head;
     while (adjListPtr)
     {
         printf("%d ", adjListPtr->vertex);
@@ -135,7 +134,7 @@ int main(int argc, char* argv[])
     {
         scanf("%d %d %d", &V, &E, &Q);
 
-        Graph * graph = createGraph(V);
+        Graph* graph = createGraph(V);
 
         for (int i = 0; i < E; i++)
         {
