@@ -95,12 +95,13 @@ def convert_infix_to_postfix(infix_str):
                             if operation_dict[stack[-1]]["ISP"] >= operation_dict[s]["ICP"]:
                                 postfix_list.append(stack.pop())
                             else:
-                                stack.append(s)
                                 break
+                        stack.append(s)
 
     while stack:
         postfix_list.append(stack.pop())
 
+    print(''.join(postfix_list))
     return ''.join(postfix_list)
 
 def calculate_postfix(postfix_str):
@@ -128,5 +129,5 @@ def calculate_postfix(postfix_str):
     return stack.pop()
 
 
-convert_postfix = convert_infix_to_postfix(example)
+convert_postfix = convert_infix_to_postfix("3+(4+5)*6+7")
 print(calculate_postfix(convert_postfix))
